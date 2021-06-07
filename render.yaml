@@ -21,7 +21,10 @@ services:
   - key: UTILS_SECRET
     generateValue: true
   - key: REDIS_URL
-    value:
+    fromService:
+      name: redis
+      type: pserv
+      property: hostport
   - key: DATABASE_URL
     fromDatabase:
       name: outline-db
@@ -60,6 +63,18 @@ services:
     sync: false
   - key: SLACK_SECRET
     sync: false
+- type: pserv
+  name: redis
+  env: docker
+  repo: https://github.com/render-examples/redis.git # optional
+  envVars:
+  - key: GENERATED_SECRET
+    generateValue: true
+  - key: DASHBOARD_SECRET
+    sync: false
+  disk:
+    name: redis-data
+    mountPath: /var/lib/redis
 
 # SLACK_VERIFICATION_TOKEN=your_token
 # SLACK_APP_ID=A0XXXXXXX
