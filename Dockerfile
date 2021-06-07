@@ -1,0 +1,1 @@
+FROM outlinewiki/outline:latest

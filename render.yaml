@@ -1,0 +1,81 @@
+services:
+- type: web
+  repo: https://github.com/render-examples/minio.git
+  name: minio
+  env: docker
+  disk:
+    name: data
+    mountPath: /data
+  envVars:
+  - key: MINIO_ACCESS_KEY
+    generateValue: true
+  - key: MINIO_SECRET_KEY
+    generateValue: true
+- type: web
+  name: outline
+  env: docker
+  branch: master
+  envVars:
+  - key: SECRET_KEY
+    generateValue: true
+  - key: UTILS_SECRET
+    generateValue: true
+  - key: DATABASE_URL
+    fromDatabase:
+      name: outline-db
+      property: connectionString
+  - key: URL
+    fromService:
+      type: docker
+      envVarKey: RENDER_EXTERNAL_URL
+      name: outline
+  - key: AWS_ACCESS_KEY_ID
+    fromService:
+      type: docker
+      name: minio
+      envVarKey: MINIO_ACCESS_KEY
+  - key: AWS_SECRET_ACCESS_KEY
+    fromService:
+      type: docker
+      name: minio
+      envVarKey: MINIO_SECRET_KEY
+  - key: AWS_REGION
+    value: us-east-1
+  - key: AWS_S3_UPLOAD_BUCKET_URL
+    value: storage
+  - key: AWS_S3_UPLOAD_BUCKET_URL
+    fromService:
+      type: docker
+      name: minio
+      envVarKey: RENDER_EXTERNAL_URL
+  - key: AWS_S3_UPLOAD_MAX_SIZE
+    value: 26214400
+  - key: AWS_S3_FORCE_PATH_STYLE
+    value: true
+  - key: AWS_S3_ACL
+    value: private
+  - key: SLACK_KEY
+    sync: false
+  - key: SLACK_SECRET
+    sync: false
+
+# SLACK_VERIFICATION_TOKEN=your_token
+# SLACK_APP_ID=A0XXXXXXX
+# SLACK_MESSAGE_ACTIONS=true
+# GOOGLE_ANALYTICS_ID=
+# SENTRY_DSN=
+# SMTP_HOST=
+# SMTP_PORT=
+# SMTP_USERNAME=
+# SMTP_PASSWORD=
+# SMTP_FROM_EMAIL=
+# SMTP_REPLY_EMAIL=
+# Custom logo that displays on the authentication screen, scaled to height: 60px
+# TEAM_LOGO=https://example.com/images/logo.png
+
+
+
+databases:
+    - name: outline-db
+      databaseName: outline # optional (Render may add a suffix)
+      ipAllowList: [] # optional (defaults to allow all)
