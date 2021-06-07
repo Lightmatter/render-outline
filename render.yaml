@@ -26,17 +26,17 @@ services:
       property: connectionString
   - key: URL
     fromService:
-      type: docker
+      type: web
       envVarKey: RENDER_EXTERNAL_URL
       name: outline
   - key: AWS_ACCESS_KEY_ID
     fromService:
-      type: docker
+      type: web
       name: minio
       envVarKey: MINIO_ACCESS_KEY
   - key: AWS_SECRET_ACCESS_KEY
     fromService:
-      type: docker
+      type: web
       name: minio
       envVarKey: MINIO_SECRET_KEY
   - key: AWS_REGION
@@ -45,7 +45,7 @@ services:
     value: storage
   - key: AWS_S3_UPLOAD_BUCKET_URL
     fromService:
-      type: docker
+      type: web
       name: minio
       envVarKey: RENDER_EXTERNAL_URL
   - key: AWS_S3_UPLOAD_MAX_SIZE
