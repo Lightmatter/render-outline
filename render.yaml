@@ -29,6 +29,10 @@ services:
     fromDatabase:
       name: outline-db
       property: connectionString
+  - key: DATABASE_URL_TEST
+    fromDatabase:
+      name: outline-db
+      property: connectionString
   - key: URL
     fromService:
       type: web
