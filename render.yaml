@@ -16,8 +16,9 @@ services:
   env: docker
   branch: master
   envVars:
+    #this has specific rules around it that can't be generated
   - key: SECRET_KEY
-    generateValue: true
+    sync: false
   - key: UTILS_SECRET
     generateValue: true
   - key: REDIS_URL
@@ -67,6 +68,14 @@ services:
     sync: false
   - key: SLACK_SECRET
     sync: false
+  - key: SLACK_VERIFICATION_TOKEN
+    sync: false
+  - key: SLACK_APP_ID
+    sync: false
+  - key: SLACK_MESSAGE_ACTIONS
+    value: true
+  - key: TEAM_LOGO
+    sync: false
 - type: pserv
   name: redis
   env: docker
@@ -80,9 +89,7 @@ services:
     name: redis-data
     mountPath: /var/lib/redis
 
-# SLACK_VERIFICATION_TOKEN=your_token
-# SLACK_APP_ID=A0XXXXXXX
-# SLACK_MESSAGE_ACTIONS=true
+
 # GOOGLE_ANALYTICS_ID=
 # SENTRY_DSN=
 # SMTP_HOST=
@@ -92,7 +99,6 @@ services:
 # SMTP_FROM_EMAIL=
 # SMTP_REPLY_EMAIL=
 # Custom logo that displays on the authentication screen, scaled to height: 60px
-# TEAM_LOGO=https://example.com/images/logo.png
 
 
 
