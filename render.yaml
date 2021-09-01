@@ -1,24 +1,5 @@
 services:
 - type: web
-  repo: https://github.com/render-examples/minio.git
-  name: minio
-  env: docker
-  disk:
-    name: data
-    mountPath: /data
-  envVars:
-  - key: MINIO_ROOT_USER
-    generateValue: true
-  - key: MINIO_ROOT_PASSWORD
-    generateValue: true
-  - key: MINIO_BROWSER
-    value: on
-  - key: MINIO_BROWSER_REDIRECT_URL
-    fromService:
-      type: web
-      envVarKey: RENDER_EXTERNAL_URL
-      name: minio
-- type: web
   name: outline
   env: docker
   branch: master
@@ -42,29 +23,17 @@ services:
       name: outline-db
       property: connectionString
   - key: URL
-    fromService:
-      type: web
-      envVarKey: RENDER_EXTERNAL_URL
-      name: outline
+    sync: false
   - key: AWS_ACCESS_KEY_ID
-    fromService:
-      type: web
-      name: minio
-      envVarKey: MINIO_ROOT_USER
+    sync: false
   - key: AWS_SECRET_ACCESS_KEY
-    fromService:
-      type: web
-      name: minio
-      envVarKey: MINIO_ROOT_PASSWORD
+    sync: false
   - key: AWS_REGION
-    value: us-east-1
+    sync: false
   - key: AWS_S3_UPLOAD_BUCKET_NAME
-    value: storage
+    sync: false
   - key: AWS_S3_UPLOAD_BUCKET_URL
-    fromService:
-      type: web
-      name: minio
-      envVarKey: RENDER_EXTERNAL_URL
+    sync: false
   - key: AWS_S3_UPLOAD_MAX_SIZE
     value: 26214400
   - key: AWS_S3_FORCE_PATH_STYLE
